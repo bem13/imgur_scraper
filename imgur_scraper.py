@@ -6,6 +6,7 @@ import math
 path = os.path.abspath('./imgur_scraper')
 string_length = 5 # The length of the ID to generate. 5 seems to work the best.
 
+#Generate a random ID
 def RandomID(string_length):
 	chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 	output = ''
@@ -15,7 +16,8 @@ def RandomID(string_length):
 		output += chars[int(index):int(index + 1)]
 	return output
 
-print 'Location of saved files: %s' % path
+#Create a folder if it doesn't exist yet
+print 'Location of saved images: %s' % path
 if not os.path.exists(path):
 	os.makedirs(path)
 	
@@ -30,6 +32,7 @@ while True:
 		continue
 	data = res.read()
 	type = res.info()['Content-Type']
+	#check if content doesn't exist (removed.png) or if it's something we don't need
 	if res.geturl() == 'http://i.imgur.com/removed.png' or type == 'text/html; charset=utf-8' or type == 'binary/octet-stream':
 		print '%s - not found' % id
 	else:
